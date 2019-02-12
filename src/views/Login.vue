@@ -6,10 +6,12 @@
         <div class="form-box">
           <el-form :model="loginForm" status-icon :rules="loginRules" ref="loginForm">
             <el-form-item prop="userName">
-              <el-input prefix-icon="el-icon-third-webicon08" type="text" placeholder="请输入手机号或邮箱" v-model="loginForm.username" autocomplete="off"></el-input>
+              <el-input prefix-icon="el-icon-third-webicon08" type="text" placeholder="请输入手机号或邮箱"
+                        v-model="loginForm.username" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item prop="pass">
-              <el-input prefix-icon="el-icon-third-mima" type="password" placeholder="请输入密码" v-model="loginForm.password" autocomplete="off"></el-input>
+              <el-input prefix-icon="el-icon-third-mima" type="password" placeholder="请输入密码"
+                        v-model="loginForm.password" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button class="submit" type="primary" @click="submitForm('loginForm')">登录</el-button>
@@ -26,22 +28,23 @@
 </template>
 
 <script>
+import { login } from '../utils/api/login'
 export default {
   data () {
     const validatePass = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error('请输入密码!'));
+      if (!this.loginForm.password) {
+        callback(new Error('请输入密码!'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     const userName = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error('请输入手机号或邮箱!'));
+      if (!this.loginForm.username) {
+        callback(new Error('请输入手机号或邮箱!'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     return {
       loginForm: {
         username: '',
@@ -53,22 +56,24 @@ export default {
         ],
         pass: [
           { validator: validatePass, trigger: 'blur' }
-        ],
+        ]
       }
-    };
+    }
   },
   methods: {
-    submitForm(formName) {
+    submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
+          login(this.loginForm).then(res => {
+            console.log(res)
+          })
         } else {
-          console.log('error submit!!');
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
-    goRegister() {
+    goRegister () {
       this.$router.push('/register')
     }
   }
@@ -76,19 +81,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .box{
+  .box {
     width: 368px;
     padding-top: 64px;
-    .title{
+    .title {
       font-size: 33px;
       font-weight: 600;
       text-align: center;
     }
-    .submit{
+    .submit {
       width: 100%;
     }
   }
-  .otherActive{
+
+  .otherActive {
     margin-top: -10px;
     display: flex;
     justify-content: space-between;
