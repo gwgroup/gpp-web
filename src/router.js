@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const openUrls = ['/login', '/register']
+const openUrls = ['/login', '/register', '/register-result']
 
 const router = new Router({
   routes: [
@@ -29,6 +29,11 @@ const router = new Router({
       path: '/register',
       name: 'register',
       component: () => import('./views/Register.vue')
+    },
+    {
+      path: '/register-result',
+      name: 'registerResult',
+      component: () => import('./views/RegisterResult.vue')
     },
     {
       path: '/',

@@ -11,7 +11,9 @@
             </el-form-item>
             <el-form-item prop="pass">
               <el-input prefix-icon="el-icon-third-mima" type="password" placeholder="请输入密码"
-                        v-model="loginForm.password" autocomplete="off"></el-input>
+                        v-model="loginForm.password" autocomplete="off"
+                        @keyup.enter="submitForm('loginForm')"
+              ></el-input>
             </el-form-item>
             <el-form-item>
               <el-button class="submit" type="primary" @click="submitForm('loginForm')">登录</el-button>

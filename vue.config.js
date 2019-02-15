@@ -7,8 +7,8 @@ module.exports = {
     port: 8080,
     proxy: {
       '/api': {
-        // "target": 'http://192.168.1.129:9002',
-        'target': 'https://www.ypcxpt.com/',
+        'target': 'http://192.168.0.141:81',
+        // 'target': 'https://www.ypcxpt.com/',
         'changeOrigin': true,
         'secure': false
         // 'pathRewrite': {

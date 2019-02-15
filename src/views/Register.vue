@@ -65,12 +65,14 @@
             </el-form-item>
           </el-form>
         </div>
+        <div class="goLogin" @click="goLogin">使用已有账号登录</div>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+import { getMobileVialCode, getEmailVialCode, registerMobile, registerEmail } from '../utils/api/register'
 export default {
   data () {
     const validatePass = (rule, value, callback) => {
@@ -81,7 +83,7 @@ export default {
       } else {
         if (this.registerForm.checkpass !== '') {
           this.$refs.registerMobileForm && this.$refs.registerMobileForm.validateField('checkPass')
-          this.$refs.registerMobileForm && this.$refs.registerEmailForm.validateField('checkPass')
+          this.$refs.registerEmailForm && this.$refs.registerEmailForm.validateField('checkPass')
         }
         callback()
       }
@@ -89,7 +91,7 @@ export default {
     const validatePass2 = (rule, value, callback) => {
       if (!this.registerForm.checkpass) {
         callback(new Error('请再次输入密码'))
-      } else if (value !== this.registerForm.password) {
+      } else if (this.registerForm.checkpass !== this.registerForm.password) {
         callback(new Error('两次输入密码不一致!'))
       } else {
         callback()
@@ -172,9 +174,21 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          if (this.registerForm.email) {
+            registerEmail(this.registerForm).then(res => {
+              this.$router.push({ name: 'registerResult', params: { name: this.registerForm.email } })
+              // if (res.code === 1000) {
+              //   this.$router.push({ name: 'registerResult', params: { name: this.registerForm.email } })
+              // }
+            })
+          } else {
+            registerMobile(this.registerForm).then(res => {
+              if (res.code === 1000) {
+                this.$router.push({ name: 'registerResult', params: { name: this.registerForm.mobile } })
+              }
+            })
+          }
         } else {
-          console.log('error submit!!')
           return false
         }
       })
@@ -212,6 +226,7 @@ export default {
         this.vailCodeMobileCount = 120
         this.vailCodeMobileMessage = this.vailCodeMobileCount + '秒'
         this.mobileCount()
+        getMobileVialCode({ mobile: this.registerForm.mobile })
       }
     },
     mobileCount () {
@@ -231,6 +246,7 @@ export default {
         this.vailCodeEmailCount = 120
         this.vailCodeEmailMessage = this.vailCodeEmailCount + '秒'
         this.emailCount()
+        getEmailVialCode({ email: this.registerForm.email })
       }
     },
     emailCount () {
@@ -243,6 +259,9 @@ export default {
           this.vailCodeEmailMessage = '重新获取'
         }
       }, 1000)
+    },
+    goLogin () {
+      this.$router.push({ name: 'login' })
     }
   }
 }
@@ -285,5 +304,11 @@ export default {
   }
   .valiButton{
     width: 100%;
+  }
+  .goLogin{
+    text-align: right;
+    font-size: 14px;
+    color: teal;
+    cursor: pointer;
   }
 </style>
