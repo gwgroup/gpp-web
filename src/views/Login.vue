@@ -67,7 +67,14 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           login(this.loginForm).then(res => {
-            console.log(res)
+            if (res.code === 1000) {
+              window.localStorage.setItem('token', res.data);
+              if (this.$route.query.redirect) {
+                this.$router.push(this.$route.query.redirect)
+              } else {
+                this.$router.push('/')
+              }
+            }
           })
         } else {
           console.log('error submit!!')

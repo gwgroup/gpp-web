@@ -1,18 +1,27 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <el-container class="warp">
+    <el-header>Header</el-header>
+    <el-container>
+      <el-aside width="220px">Aside</el-aside>
+      <el-main>
+        <router-view/>
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .warp{
+    height: 100%;
+  }
+</style>
