@@ -176,10 +176,10 @@ export default {
         if (valid) {
           if (this.registerForm.email) {
             registerEmail(this.registerForm).then(res => {
-              this.$router.push({ name: 'registerResult', params: { name: this.registerForm.email } })
-              // if (res.code === 1000) {
-              //   this.$router.push({ name: 'registerResult', params: { name: this.registerForm.email } })
-              // }
+              // this.$router.push({ name: 'registerResult', params: { name: this.registerForm.email } })
+              if (res.code === 1000) {
+                this.$router.push({ name: 'registerResult', params: { name: this.registerForm.email } })
+              }
             })
           } else {
             registerMobile(this.registerForm).then(res => {
