@@ -57,11 +57,6 @@ const router = new Router({
         name: 'redPackageList',
         component: () => import(/* webpackChunkName: "about" */ './views/RedPackageList.vue'),
         meta: { path: '首页/红包管理/红包列表', name: 'redPackageList' }
-      }, {
-        path: '/createRedPackage',
-        name: 'createRedPackage',
-        component: () => import(/* webpackChunkName: "about" */ './views/CreateRedPackage.vue'),
-        meta: { path: '首页/红包管理/创建红包', name: 'createRedPackage' }
       }]
     }
   ]

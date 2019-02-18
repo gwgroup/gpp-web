@@ -16,10 +16,6 @@
             <i class="el-icon-third-liebiao"></i>
             <span>红包列表</span>
           </el-menu-item>
-          <el-menu-item index="/createRedPackage">
-            <i class="el-icon-third-chuangjiangongdan"></i>
-            <span>创建红包</span>
-          </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <!--<el-submenu index="1">-->

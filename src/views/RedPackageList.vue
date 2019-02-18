@@ -21,7 +21,7 @@
             <div slot="header" class="tableHeader">
                 <span>红包活动列表</span>
                 <span class="tableOperation">
-                    <el-button type="primary" size="small" @click="creat">添加</el-button>
+                    <el-button type="primary" size="small" @click="creat">创建红包</el-button>
                 </span>
             </div>
             <el-table :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
@@ -46,12 +46,14 @@
                 </el-pagination>
             </div>
         </el-card>
+        <CreateRedPackage :flag="createFlag" @close="close" @submit="submit" />
     </div>
 </template>
 
 <script>
     import { getListApi } from '../utils/api/redPackage.js'
     import { reset } from '../utils/utils.js'
+    import CreateRedPackage from '../components/RedPackage/CreateRedPackage.vue'
     export default {
         name: 'redPackageList',
         data() {
@@ -64,8 +66,12 @@
                     descending: null
                 },
                 tableData: [],
-                total: 0
+                total: 0,
+                createFlag: false
             }
+        },
+        components: {
+            CreateRedPackage
         },
         mounted() {
             this.getList()
@@ -89,7 +95,14 @@
                 console.log(size)
             },
             creat() {
-                this.$router.push('/createRedPackage')
+                this.createFlag = true
+            },
+            close() {
+                this.createFlag = false
+            },
+            submit() {
+                this.createFlag = false
+                this.getList()
             }
         },
     }
