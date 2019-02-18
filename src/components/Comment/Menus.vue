@@ -1,14 +1,27 @@
 <template>
   <div class="menusBox">
     <div class="header"></div>
-    <el-menu
-      default-active="/dashboard"
-      router
-      class="el-menu">
+    <el-menu :default-active="defaultActive" router class="el-menu">
       <el-menu-item index="/dashboard">
-        <i class="el-icon-third-yemian"></i>
+        <i class="el-icon-third-shouye"></i>
         <span slot="title">首页</span>
       </el-menu-item>
+      <el-submenu index="1">
+        <template slot="title">
+          <i class="el-icon-third-hongbao"></i>
+          <span>红包管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="/redPackageList">
+            <i class="el-icon-third-liebiao"></i>
+            <span>红包列表</span>
+          </el-menu-item>
+          <el-menu-item index="/createRedPackage">
+            <i class="el-icon-third-chuangjiangongdan"></i>
+            <span>创建红包</span>
+          </el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
       <!--<el-submenu index="1">-->
       <!--<template slot="title">-->
       <!--<i class="el-icon-third-yemian"></i>-->
@@ -46,6 +59,19 @@
 <script>
   export default {
     name: 'Menus',
+    data() {
+      return {
+        defaultActive: '/dashboard'
+      }
+    },
+    watch: {
+      $route(to, from) {
+        this.defaultActive = to.path
+      }
+    },
+    created() {
+      this.defaultActive = this.$route.path
+    },
   }
 </script>
 
@@ -57,11 +83,13 @@
     z-index: 11;
     background: #fff;
     border-right: 1px solid #cecece;
+
     .header {
       height: 64px;
       border-bottom: 1px solid #cecece;
       width: 100%;
     }
+
     .el-menu {
       border: 0;
     }
