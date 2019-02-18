@@ -47,6 +47,11 @@ const router = new Router({
         name: 'dashboard',
         component: () => import(/* webpackChunkName: "about" */ './views/Dashboard.vue'),
         meta: { path: '首页', name: 'dashboard' }
+      }, {
+        path: '/about',
+        name: 'about',
+        component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+        meta: { path: '首页/about', name: 'about' }
       }]
     }
   ]
