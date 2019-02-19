@@ -68,7 +68,7 @@ export default {
         if (valid) {
           login(this.loginForm).then(res => {
             if (res.code === 1000) {
-              window.localStorage.setItem('token', res.data);
+              window.localStorage.setItem('token', res.data)
               if (this.$route.query.redirect) {
                 this.$router.push(this.$route.query.redirect)
               } else {

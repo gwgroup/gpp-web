@@ -53,22 +53,22 @@
 </template>
 
 <script>
-  export default {
-    name: 'Menus',
-    data() {
-      return {
-        defaultActive: '/dashboard'
-      }
-    },
-    watch: {
-      $route(to, from) {
-        this.defaultActive = to.path
-      }
-    },
-    created() {
-      this.defaultActive = this.$route.path
-    },
+export default {
+  name: 'Menus',
+  data () {
+    return {
+      defaultActive: '/dashboard'
+    }
+  },
+  watch: {
+    $route (to, from) {
+      this.defaultActive = to.path
+    }
+  },
+  created () {
+    this.defaultActive = this.$route.path
   }
+}
 </script>
 
 <style lang="scss" scoped>

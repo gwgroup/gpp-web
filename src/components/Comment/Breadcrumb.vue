@@ -5,30 +5,30 @@
 </template>
 
 <script>
-    export default {
-        name: 'breadcrumb',
-        data() {
-            return {
-                path: []
-            }
-        },
-        created() {
-            this.getPath()
-        },
-        methods: {
-            getPath() {
-                const arr = this.$route.meta.path.split('/');
-                const obj = [];
-                arr.map(v => {
-                    obj.push({
-                        text: v,
-                        disabled: false
-                    })
-                });
-                obj[obj.length - 1].disabled = true;
-                console.log(obj)
-                this.path = obj
-            }
-        },
+export default {
+  name: 'breadcrumb',
+  data () {
+    return {
+      path: []
     }
+  },
+  created () {
+    this.getPath()
+  },
+  methods: {
+    getPath () {
+      const arr = this.$route.meta.path.split('/')
+      const obj = []
+      arr.map(v => {
+        obj.push({
+          text: v,
+          disabled: false
+        })
+      })
+      obj[obj.length - 1].disabled = true
+      console.log(obj)
+      this.path = obj
+    }
+  }
+}
 </script>

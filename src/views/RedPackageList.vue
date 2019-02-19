@@ -35,10 +35,10 @@
                 </el-table-column>
             </el-table>
             <div class="pagination">
-                <el-pagination 
-                    @size-change="handleSizeChange" 
+                <el-pagination
+                    @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
-                    :page-sizes="[10, 15, 20, 25]" 
+                    :page-sizes="[10, 15, 20, 25]"
                     :page-size="10"
                     layout="total, sizes, prev, pager, next, jumper"
                     background
@@ -51,61 +51,61 @@
 </template>
 
 <script>
-    import { getListApi } from '../utils/api/redPackage.js'
-    import { reset } from '../utils/utils.js'
-    import CreateRedPackage from '../components/RedPackage/CreateRedPackage.vue'
-    export default {
-        name: 'redPackageList',
-        data() {
-            return {
-                params: {
-                    query: null,
-                    page_index: 1,
-                    page_size: 10,
-                    sort_by: null,
-                    descending: null
-                },
-                tableData: [],
-                total: 0,
-                createFlag: false
-            }
-        },
-        components: {
-            CreateRedPackage
-        },
-        mounted() {
-            this.getList()
-        },
-        methods: {
-            getList() {
-                getListApi(this.params).then(res => {
-                    console.log(res)
-                })
-            },
-            reset() {
-                reset(this.params)
-            },
-            handleSelectionChange(val) {
-                this.multipleSelection = val;
-            },
-            handleSizeChange(page) {
-                console.log(page)
-            },
-            handleCurrentChange(size) {
-                console.log(size)
-            },
-            creat() {
-                this.createFlag = true
-            },
-            close() {
-                this.createFlag = false
-            },
-            submit() {
-                this.createFlag = false
-                this.getList()
-            }
-        },
+import { getListApi } from '../utils/api/redPackage.js'
+import { reset } from '../utils/utils.js'
+import CreateRedPackage from '../components/RedPackage/CreateRedPackage.vue'
+export default {
+  name: 'redPackageList',
+  data () {
+    return {
+      params: {
+        query: null,
+        page_index: 1,
+        page_size: 10,
+        sort_by: null,
+        descending: null
+      },
+      tableData: [],
+      total: 0,
+      createFlag: false
     }
+  },
+  components: {
+    CreateRedPackage
+  },
+  mounted () {
+    this.getList()
+  },
+  methods: {
+    getList () {
+      getListApi(this.params).then(res => {
+        console.log(res)
+      })
+    },
+    reset () {
+      reset(this.params)
+    },
+    handleSelectionChange (val) {
+      this.multipleSelection = val
+    },
+    handleSizeChange (page) {
+      console.log(page)
+    },
+    handleCurrentChange (size) {
+      console.log(size)
+    },
+    creat () {
+      this.createFlag = true
+    },
+    close () {
+      this.createFlag = false
+    },
+    submit () {
+      this.createFlag = false
+      this.getList()
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

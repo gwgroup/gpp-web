@@ -1,4 +1,4 @@
-import http from '../https';
+import http from '../https'
 
 /**
  * 登录接口

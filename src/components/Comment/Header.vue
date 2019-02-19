@@ -22,7 +22,7 @@ export default {
   props: ['userLoad'],
   methods: {
     logOut () {
-      window.localStorage.removeItem('token');
+      window.localStorage.removeItem('token')
       this.$router.push('/login')
     }
   }

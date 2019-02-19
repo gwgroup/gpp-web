@@ -1,4 +1,4 @@
-import http from '../https';
+import http from '../https'
 
 /**
  * 获取手机号验证码
