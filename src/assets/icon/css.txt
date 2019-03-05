@@ -1,12 +1,12 @@
 [class^="el-icon-third"],
-[class*=" el-icon-third"]/*这里有空格*/
-{
-  font-family: "iconfont" !important;
+   [class*=" el-icon-third"]/*这里有空格*/
+   {
+     font-family: "iconfont" !important;
 
-  font-size: 16px;
+     font-size: 16px;
 
-  font-style: normal;
+     font-style: normal;
 
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+   }

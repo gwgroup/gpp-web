@@ -39,6 +39,13 @@
         </el-table-column>
         <el-table-column prop="used_money" label="已花费金额">
         </el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-tooltip class="item" effect="dark" content="批量生成现金红包" placement="top">
+              <i class="el-icon-third-hongbao1" @click="batchCreatRedPackage(scope.row)"></i>
+            </el-tooltip>
+          </template>
+        </el-table-column>
       </el-table>
       <div class="pagination">
         <el-pagination
@@ -53,6 +60,7 @@
       </div>
     </el-card>
     <CreateRedPackage :flag="createFlag" @close="close" @submit="submit"/>
+    <BatchCreatRedPackage :flag="batchCreatFlag" @close="close" @submit="submit"/>
   </div>
 </template>
 
@@ -60,6 +68,7 @@
 import { getListApi } from '../utils/api/redPackage.js'
 import { reset, dateFtt } from '../utils/utils.js'
 import CreateRedPackage from '../components/RedPackage/CreateRedPackage.vue'
+import BatchCreatRedPackage from '../components/RedPackage/BatchCreatRedPackage.vue'
 
 export default {
   name: 'redPackageList',
@@ -75,11 +84,13 @@ export default {
       tableData: [],
       total: 0,
       createFlag: false,
-      multipleSelection: []
+      multipleSelection: [],
+      batchCreatFlag: false
     }
   },
   components: {
-    CreateRedPackage
+    CreateRedPackage,
+    BatchCreatRedPackage
   },
   mounted () {
     this.getList()
@@ -115,14 +126,23 @@ export default {
     },
     close () {
       this.createFlag = false
+      this.batchCreatFlag = false
     },
     submit () {
       this.createFlag = false
+      this.batchCreatFlag = false
       this.getList()
+    },
+    batchCreatRedPackage (item) {
+      console.log(item)
+      this.batchCreatFlag = true;
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+  .el-icon-third-hongbao1{
+    cursor: pointer;
+  }
 </style>
