@@ -1,6 +1,6 @@
 <template>
-    <el-dialog title="创建红包" :visible.sync="flag" width="30%" :before-close="handleClose" append-to-body>
-        <el-form :model="params" status-icon :rules="rules" ref="form" label-width="70px">
+    <el-dialog title="创建红包" :visible.sync="flag" width="30%" append-to-body :show-close="false" :close-on-click-modal="false"	>
+        <el-form :model="params" status-icon :rules="rules" ref="form" label-width="80px">
           <el-form-item label="活动名称" prop="name">
             <el-input v-model="params.act_name" autocomplete="off"></el-input>
           </el-form-item>
@@ -31,27 +31,6 @@ export default {
     }
   },
   data () {
-    const validateActName = (rule, value, callback) => {
-      if (!!value) {
-        callback(new Error('请输入活动名'));
-      } else {
-        callback();
-      }
-    }
-    const validateSendName = (rule, value, callback) => {
-      if (!!value) {
-        callback(new Error('请输入活动方'));
-      } else {
-        callback();
-      }
-    }
-    const validateWishing = (rule, value, callback) => {
-      if (!!value) {
-        callback(new Error('请输入祝福语'));
-      } else {
-        callback();
-      }
-    }
     return {
       params: {
         act_name: null,
@@ -60,13 +39,13 @@ export default {
       },
       rules: {
         name: [
-          { validator: validateActName, trigger: 'blur' }
+          { required: true, message: '请输入活动名称', trigger: 'blur' },
         ],
         organizers: [
-          { validator: validateSendName, trigger: 'blur' }
+          { required: true, message: '请输入活动方', trigger: 'blur' },
         ],
         blessing: [
-          { validator: validateWishing, trigger: 'blur' }
+          { required: true, message: '请输入祝福语', trigger: 'blur' },
         ],
       }
     }
@@ -91,13 +70,6 @@ export default {
         }
       });
     },
-    handleClose (done) {
-      this.$confirm('确认关闭, 数据将不保存？')
-        .then(_ => {
-          done()
-        })
-        .catch(_ => {})
-    }
   }
 }
 </script>

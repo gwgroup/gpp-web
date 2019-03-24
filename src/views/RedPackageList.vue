@@ -44,6 +44,9 @@
             <el-tooltip class="item" effect="dark" content="批量生成现金红包" placement="top">
               <i class="el-icon-third-hongbao1" @click="batchCreatRedPackage(scope.row)"></i>
             </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="查看详情" placement="top">
+              <i class="el-icon-tickets" @click="detail(scope.row)"></i>
+            </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
@@ -59,16 +62,18 @@
         </el-pagination>
       </div>
     </el-card>
-    <CreateRedPackage :flag="createFlag" @close="close" @submit="submit"/>
-    <BatchCreatRedPackage :flag="batchCreatFlag" @close="close" @submit="submit"/>
+    <CreateRedPackage v-if="createFlag" :flag="createFlag" @close="close" @submit="submit"/>
+    <BatchCreatRedPackage v-if="batchCreatFlag" :item="item" :flag="batchCreatFlag" @close="close" @submit="submit"/>
+    <LoadReadPackage v-if="loadFlag" :list="loadList" :flag="loadFlag" @close="close" />
   </div>
 </template>
 
 <script>
-import { getListApi } from '../utils/api/redPackage.js'
+import { getListApi, getLoadApi } from '../utils/api/redPackage.js'
 import { reset, dateFtt } from '../utils/utils.js'
 import CreateRedPackage from '../components/RedPackage/CreateRedPackage.vue'
 import BatchCreatRedPackage from '../components/RedPackage/BatchCreatRedPackage.vue'
+import LoadReadPackage from '../components/RedPackage/LoadReadPackage'
 
 export default {
   name: 'redPackageList',
@@ -85,12 +90,16 @@ export default {
       total: 0,
       createFlag: false,
       multipleSelection: [],
-      batchCreatFlag: false
+      batchCreatFlag: false,
+      item: {},
+      loadList: [],
+      loadFlag: false
     }
   },
   components: {
     CreateRedPackage,
-    BatchCreatRedPackage
+    BatchCreatRedPackage,
+    LoadReadPackage
   },
   mounted () {
     this.getList()
@@ -98,7 +107,6 @@ export default {
   methods: {
     getList () {
       getListApi(this.params).then(res => {
-        console.log(res)
         if (res.code === 1000) {
           this.total = res.data.totalCount
           res.data.rows.map(v => {
@@ -127,22 +135,34 @@ export default {
     close () {
       this.createFlag = false
       this.batchCreatFlag = false
+      this.loadFlag = false
     },
     submit () {
       this.createFlag = false
       this.batchCreatFlag = false
+      this.params.page_index = 1;
       this.getList()
     },
     batchCreatRedPackage (item) {
-      console.log(item)
+      this.item = item;
       this.batchCreatFlag = true;
+    },
+    detail(item) {
+      getLoadApi({id: item.id}).then(res => {
+        if (res.code === 1000) {
+          this.loadList = res.data
+          this.loadFlag = true
+        }
+      })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .el-icon-third-hongbao1{
+  .el-icon-third-hongbao1, .el-icon-tickets{
     cursor: pointer;
+    font-size: 16px;
+    padding-left: 9px;
   }
 </style>

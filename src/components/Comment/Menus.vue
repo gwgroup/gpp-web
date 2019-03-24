@@ -18,6 +18,24 @@
           </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
+      <el-submenu index="2">
+        <template slot="title">
+          <i class="el-icon-third-chongzhi"></i>
+          <span>充值管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="/payHistory">
+            <i class="el-icon-third-chongzhijilu"></i>
+            <span>充值记录</span>
+          </el-menu-item>
+        </el-menu-item-group>
+        <el-menu-item-group>
+          <el-menu-item index="/pay">
+            <i class="el-icon-third-chongzhi1"></i>
+            <span>账户充值</span>
+          </el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
       <!--<el-submenu index="1">-->
       <!--<template slot="title">-->
       <!--<i class="el-icon-third-yemian"></i>-->

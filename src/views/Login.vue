@@ -19,7 +19,7 @@
               <el-button class="submit" type="primary" @click="submitForm('loginForm')">登录</el-button>
             </el-form-item>
             <div class="otherActive">
-              <el-button type="text">忘记密码</el-button>
+              <el-button type="text" @click="goForgetPas">忘记密码</el-button>
               <el-button type="text" @click="goRegister">注册账户</el-button>
             </div>
           </el-form>
@@ -84,6 +84,9 @@ export default {
     },
     goRegister () {
       this.$router.push('/register')
+    },
+    goForgetPas () {
+      this.$router.push('/forgetPassword')
     }
   }
 }

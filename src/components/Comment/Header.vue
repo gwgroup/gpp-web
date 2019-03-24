@@ -1,13 +1,13 @@
 <template>
   <div class="headerBox">
     <el-row>
-      <el-col :span="22" class="placeholder">
+      <el-col :span="20" class="placeholder">
       </el-col>
-      <el-col :span="2" class="menus">
+      <el-col :span="4" class="menus">
         <el-dropdown trigger="click">
           <el-button class="dropDown">{{userLoad.display_name}}<i class="el-icon-arrow-down el-icon--right"></i></el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>修改密码</el-dropdown-item>
+            <el-dropdown-item @click.native="goResetPas">修改密码</el-dropdown-item>
             <el-dropdown-item @click.native="logOut">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -24,6 +24,9 @@ export default {
     logOut () {
       window.localStorage.removeItem('token')
       this.$router.push('/login')
+    },
+    goResetPas () {
+      this.$router.push('/forgetPassword')
     }
   }
 }

@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const openUrls = ['/login', '/register', '/register-result']
+const openUrls = ['/login', '/register', '/register-result', '/forgetPassword']
 
 const router = new Router({
   routes: [
@@ -34,6 +34,11 @@ const router = new Router({
       path: '/register-result',
       name: 'registerResult',
       component: () => import('./views/RegisterResult.vue')
+    }, {
+      path: '/forgetPassword',
+      name: 'forgetPassword',
+      component: () => import(/* webpackChunkName: "about" */ './views/ForgetPassword.vue'),
+      meta: { name: 'forgetPassword' }
     },
     {
       path: '/',
@@ -57,6 +62,16 @@ const router = new Router({
         name: 'redPackageList',
         component: () => import(/* webpackChunkName: "about" */ './views/RedPackageList.vue'),
         meta: { path: '首页/红包管理/红包列表', name: 'redPackageList' }
+      }, {
+        path: '/payHistory',
+        name: 'payHistory',
+        component: () => import(/* webpackChunkName: "about" */ './views/PayHistory.vue'),
+        meta: { path: '首页/充值管理/充值记录', name: 'payHistory' }
+      }, {
+        path: '/pay',
+        name: 'pay',
+        component: () => import(/* webpackChunkName: "about" */ './views/Pay.vue'),
+        meta: { path: '首页/充值管理/账户充值', name: 'pay' }
       }]
     }
   ]
