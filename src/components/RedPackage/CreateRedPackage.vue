@@ -1,13 +1,13 @@
 <template>
     <el-dialog title="创建红包" :visible.sync="flag" width="30%" append-to-body :show-close="false" :close-on-click-modal="false"	>
         <el-form :model="params" status-icon :rules="rules" ref="form" label-width="80px">
-          <el-form-item label="活动名称" prop="name">
+          <el-form-item label="活动名称" prop="act_name">
             <el-input v-model="params.act_name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="活动方" prop="organizers">
+          <el-form-item label="活动方" prop="send_name">
             <el-input v-model="params.send_name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="祝福语" prop="blessing">
+          <el-form-item label="祝福语" prop="wishing">
             <el-input v-model="params.wishing"></el-input>
           </el-form-item>
         </el-form>
@@ -38,13 +38,13 @@ export default {
         wishing: null
       },
       rules: {
-        name: [
+        act_name: [
           { required: true, message: '请输入活动名称', trigger: 'blur' },
         ],
-        organizers: [
+        send_name: [
           { required: true, message: '请输入活动方', trigger: 'blur' },
         ],
-        blessing: [
+        wishing: [
           { required: true, message: '请输入祝福语', trigger: 'blur' },
         ],
       }

@@ -3,7 +3,7 @@
     <Breadcrumb class="breadcrumb"/>
     <el-card class="searchBox">
       <el-row :gutter="20">
-        <el-col :span="6">
+        <el-col :span="8">
           <label>查询</label>
           <el-input class="searchInput" size="small" v-model="params.query" placeholder="请输入内容"></el-input>
         </el-col>

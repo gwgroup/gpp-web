@@ -4,99 +4,82 @@
     <el-card class="searchBox">
       <el-row :gutter="20">
         <el-col :span="6">
-          <label>账户余额</label>
+          <label>账户余额：</label>
+          <span>¥{{info.account_money}}</span>
         </el-col>
       </el-row>
     </el-card>
-    <el-card class="tableCard">
+    <el-card class="tableCard" v-if="discountCouponList.length">
+       <div slot="header" class="clearfix">
+        <span>优惠券</span>
+      </div>
     </el-card>
-    <CreateRedPackage v-if="createFlag" :flag="createFlag" @close="close" @submit="submit"/>
-    <BatchCreatRedPackage v-if="batchCreatFlag" :item="item" :flag="batchCreatFlag" @close="close" @submit="submit"/>
+    <el-card class="tableCard">
+       <div slot="header" class="clearfix">
+        <span>现金账户充值</span>
+      </div>
+      <div class="moneyBox">
+        <label>金额:</label>
+        <el-input class="moneyInput" size="small" v-model="money" placeholder="请输入金额"></el-input>
+      </div>
+      <div class="btnsBox">
+        <el-button class="weixin" @click="weixinPay">微信支付</el-button>
+      </div>
+    </el-card>
   </div>
 </template>
 
 <script>
-import { getListApi } from '../utils/api/pay.js'
+import { getDiscountCouponApi, payDiscountCouponApi, payWeixinApi, payWeixinQueryApi } from '../utils/api/pay.js'
+import { getUserLoad } from '../utils/api/user'
 import { reset, dateFtt } from '../utils/utils.js'
-import CreateRedPackage from '../components/RedPackage/CreateRedPackage.vue'
-import BatchCreatRedPackage from '../components/RedPackage/BatchCreatRedPackage.vue'
 
 export default {
-  name: 'redPackageList',
+  name: 'Pay',
   data () {
     return {
       params: {
-        query: null,
-        page_index: 1,
-        page_size: 10,
-        sort_by: null,
-        descending: null
       },
-      tableData: [],
-      total: 0,
-      createFlag: false,
-      multipleSelection: [],
-      batchCreatFlag: false,
-      item: {},
-      loadList: []
+      info: {},
+      discountCouponList: [],
+      money: null
     }
   },
   components: {
-    CreateRedPackage,
-    BatchCreatRedPackage
   },
   mounted () {
-    this.getList()
+    this.getInfo()
+    getDiscountCouponApi().then(res => {
+      if (res.code === 1000) {
+        this.discountCouponList = res.data;
+      }
+    })
   },
   methods: {
-    getList () {
-      getListApi(this.params).then(res => {
-        console.log(res)
+    getInfo () {
+      getUserLoad(this.params).then(res => {
         if (res.code === 1000) {
-          this.total = res.data.totalCount
-          res.data.rows.map(v => {
-            v.create_time = dateFtt('yyyy-MM-dd hh:mm:ss', new Date(v.create_time))
-            v.update_time = dateFtt('yyyy-MM-dd hh:mm:ss', new Date(v.update_time))
-          })
-          this.tableData = res.data.rows
+          this.info = res.data;
         }
       })
     },
     reset () {
       reset(this.params)
     },
-    handleSelectionChange (val) {
-      this.multipleSelection = val
-    },
-    handleSizeChange (page) {
-      console.log(page)
-    },
-    handleCurrentChange (size) {
-      console.log(size)
-    },
-    creat () {
-      this.createFlag = true
-    },
     close () {
       this.createFlag = false
       this.batchCreatFlag = false
     },
-    submit: function () {
-      this.createFlag = false
-      this.batchCreatFlag = false
-      this.params.page_index = 1
-      this.getList()
-    },
-    batchCreatRedPackage (item) {
-      this.item = item
-      this.batchCreatFlag = true
-    },
-    detail (item) {
-      getLoadApi({ id: item.id }).then(res => {
-        if (res.code === 1000) {
-          this.loadList = res.data
-        }
-      })
+    weixinPay() {
+      if ((/^-?\d+\.?\d{0,2}$/.test(this.money))) {
+        payWeixinApi({money: Number(this.money)}).then(res => {
+          if (res.code === 1000) {
+            console.log(res.data)
+          }
+        })
+      } else {
+        this.$message.warning('请输入数值最多保留两位小数')
+      }
     }
   }
 }
@@ -107,5 +90,22 @@ export default {
     cursor: pointer;
     font-size: 16px;
     padding-left: 9px;
+  }
+  .moneyBox{
+    padding: 24px;
+    label{
+      padding-right: 12px;
+    }
+    .moneyInput{
+      width: 120px;
+    }
+  }
+  .btnsBox{
+    padding: 24px;
+    padding-top: 0;
+    .weixin{
+      background: #55b737;
+      color: #fff;
+    }
   }
 </style>

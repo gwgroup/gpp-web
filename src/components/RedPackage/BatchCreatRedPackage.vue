@@ -16,12 +16,13 @@
       <el-button @click="close">取 消</el-button>
       <el-button type="primary" @click="submit">确 定</el-button>
     </span>
+    <Preview v-if="previewFlag" :flag="previewFlag" :params="params" :id="item.id" @close="close" />
   </el-dialog>
-
 </template>
 
 <script>
   import { reset } from '../../utils/utils.js'
+  import Preview from './Preview'
   import { createRedPackageCardApi } from '../../utils/api/redPackage'
   export default {
     name: 'createRedPackage',
@@ -40,7 +41,7 @@
         params: {
           money: null,
           count: null,
-          max: null
+          max: null,
         },
         rules: {
           money: [
@@ -49,50 +50,29 @@
           count: [
             { required: true, message: '请输入生成数量', trigger: 'blur' },
           ],
-        }
+        },
+        previewFlag: false
       }
+    },
+    components: {
+      Preview
     },
     methods: {
       close() {
+        this.previewFlag = false;
         reset(this.params)
         this.$emit('close')
       },
       submit() {
         this.$refs.form.validate((valid) => {
           if (valid) {
-            const moneyArr = this.__generateRandomFullMoney(1, this.params.max, this.params.money, this.params.count);
-            console.log(moneyArr)
-            createRedPackageCardApi({
-              red_packet_id: this.item.id,
-              moneys: moneyArr
-            }).then(res => {
-              if (res.code === 1000) {
-                this.$emit('submit')
-                this.$message.success('创建成功')
-              }
-            })
+            this.previewFlag = true;
           } else {
             console.log('error submit!!')
             return false
           }
         })
       },
-      __generateRandomFullMoney(min = 1, max, total, count) {
-        var result = [];
-        var last = total - min * count;
-        if (!max) { max = last / 2; }
-        max--;
-        // 80
-        for (var i = 0; i < count - 1; i++) {
-          //let avg = last/(count-i);
-          var get = parseFloat((Math.random() * (last >= max ? max : last) + min).toFixed(2));
-          last = last - get + min;
-          last = last > 0 ? last : 0;
-          result.push(get);
-        }
-        result.push(parseFloat((last + min).toFixed(2)));
-        return result;
-      }
     }
   }
 </script>

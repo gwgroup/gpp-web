@@ -1,7 +1,7 @@
 <template>
   <el-dialog title="红包详情" :visible.sync="flag" width="80%" append-to-body :show-close="false"
     :close-on-click-modal="false">
-    <el-table :data="list" border style="width: 100%" max-height="600">
+    <el-table :data="list" border style="width: 100%" max-height="500">
       <el-table-column prop="money" sortable label="金额" width="180">
       </el-table-column>
       <el-table-column prop="batch_no" label="批次号" width="180">
@@ -45,9 +45,6 @@
         params: {
         },
       }
-    },
-    created() {
-      console.log(this.list)
     },
     methods: {
       close() {
