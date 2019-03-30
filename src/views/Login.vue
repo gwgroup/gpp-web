@@ -2,7 +2,7 @@
   <div>
     <el-row type="flex" justify="center">
       <el-col class="box">
-        <h4 class="title">红包</h4>
+        <h4 class="title">欢迎登录优品促销平台</h4>
         <div class="form-box">
           <el-form :model="loginForm" status-icon :rules="loginRules" ref="loginForm">
             <el-form-item prop="userName">

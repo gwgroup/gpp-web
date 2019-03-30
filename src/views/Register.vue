@@ -2,14 +2,14 @@
   <div>
     <el-row type="flex" justify="center">
       <el-col class="box">
-        <h4 class="title">红包</h4>
+        <h4 class="title">注册</h4>
         <div class="registerTitle">
           <span @click="activeChange(0)" :class="`${active === 0 ? 'active': ''}`">手机号注册</span>
           <span @click="activeChange(1)" :class="`${active === 1 ? 'active': ''}`">邮箱注册</span>
         </div>
         <div class="form-box" v-if="active === 0">
-          <el-form :model="registerForm" status-icon :rules="registerRules" ref="registerMobileForm">
-            <el-form-item prop="userName">
+          <el-form :model="registerForm" status-icon :rules="registerRules" ref="registerMobileForm" autocomplete="off">
+            <el-form-item prop="displayName">
               <el-input prefix-icon="el-icon-third-webicon08" type="text" placeholder="请输入昵称" v-model="registerForm.display_name" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item prop="pass">
@@ -37,8 +37,8 @@
           </el-form>
         </div>
         <div class="form-box" v-if="active === 1">
-          <el-form :model="registerForm" status-icon :rules="registerRules" ref="registerEmailForm">
-            <el-form-item prop="userName">
+          <el-form :model="registerForm" status-icon :rules="registerRules" ref="registerEmailForm" autocomplete="off">
+            <el-form-item prop="displayName">
               <el-input prefix-icon="el-icon-third-webicon08" type="text" placeholder="请输入昵称" v-model="registerForm.display_name" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item prop="pass">
@@ -97,7 +97,7 @@ export default {
         callback()
       }
     }
-    const userName = (rule, value, callback) => {
+    const displayName = (rule, value, callback) => {
       if (!this.registerForm.display_name) {
         callback(new Error('请输入昵称!'))
       } else {
@@ -146,8 +146,8 @@ export default {
       vailCodeMobileCount: 0,
       vailCodeEmailCount: 0,
       registerRules: {
-        userName: [
-          { validator: userName, trigger: 'blur' }
+        displayName: [
+          { validator: displayName, trigger: 'blur' }
         ],
         pass: [
           { validator: validatePass, trigger: 'blur' }
